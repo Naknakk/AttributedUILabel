@@ -41,19 +41,5 @@ public final class FigmaUILabel: UILabel {
             .underlineStyle(underlineStyle)
             .apply()
     }
-    
-    private func debugPrintAttributes(_ label: UILabel, tag: String) {
-        guard let attr = label.attributedText else {
-            print("[\(tag)] no attributedText")
-            return
-        }
-        
-        let fullRange = NSRange(location: 0, length: attr.length)
-        print("[\(tag)] length: \(attr.length)")
-        
-        attr.enumerateAttributes(in: fullRange, options: []) { attributes, range, _ in
-            print("  - range: \(range), attrs: \(attributes)")
-        }
-    }
 }
 
