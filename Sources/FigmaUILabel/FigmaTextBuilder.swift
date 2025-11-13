@@ -1,13 +1,13 @@
 //
-//  TextAttributeSet.swift
-//  AttributedUILabel
+//  FigmaTextBuilder.swift
+//  FigmaUILabel
 //
 //  Created by YunhakLee on 4/1/25.
 //
 
 import UIKit
 
-struct AttributedStringSet {
+struct FigmaTextBuilder {
     var label: FigmaUILabel
     var attributedString: NSMutableAttributedString
     
@@ -18,7 +18,7 @@ struct AttributedStringSet {
 }
 
 // MARK: Basic
-extension AttributedStringSet {
+extension FigmaTextBuilder {
     func applyAttribute() {
         label.attributedText = attributedString
     }
@@ -26,7 +26,7 @@ extension AttributedStringSet {
 
 
 // MARK: TextStyle
-extension AttributedStringSet {
+extension FigmaTextBuilder {
     private func baseParagraphStyle() -> NSMutableParagraphStyle {
         let style = NSMutableParagraphStyle()
         style.alignment = label.textAlignment
@@ -36,7 +36,7 @@ extension AttributedStringSet {
         return style
     }
     
-    func lineHeight(_ value: CGFloat?) -> AttributedStringSet {
+    func lineHeight(_ value: CGFloat?) -> FigmaTextBuilder {
         let length = attributedString.length
         let range = NSRange(location: 0, length: length)
         let style = baseParagraphStyle()
@@ -61,7 +61,7 @@ extension AttributedStringSet {
         return self
     }
     
-    func kerning(_ value: CGFloat?) -> AttributedStringSet {
+    func kerning(_ value: CGFloat?) -> FigmaTextBuilder {
         let length = attributedString.length
         let range = NSRange(location: 0, length: length)
         
@@ -77,7 +77,7 @@ extension AttributedStringSet {
         return self
     }
     
-    func underlineStyle(_ style: NSUnderlineStyle?) -> AttributedStringSet {
+    func underlineStyle(_ style: NSUnderlineStyle?) -> FigmaTextBuilder {
         let length = attributedString.length
         let range = NSRange(location: 0, length: length)
         

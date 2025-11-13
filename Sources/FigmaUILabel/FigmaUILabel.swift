@@ -25,6 +25,7 @@ public final class FigmaUILabel: UILabel {
         guard !isUpdating else { return }
         isUpdating = true
         defer { isUpdating = false }
+        
         self.makeAttribute(with: self.text)
             .lineHeight(lineHeight.resolvedValue(for: self.font))
             .kerning(kerning.resolvedValue(for: self.font))
@@ -34,9 +35,9 @@ public final class FigmaUILabel: UILabel {
 }
 
 extension FigmaUILabel {
-    private func makeAttribute(with text: String?) -> AttributedStringSet {
+    private func makeAttribute(with text: String?) -> FigmaTextBuilder {
         let string = text ?? ""
-        return AttributedStringSet(
+        return FigmaTextBuilder(
             label: self,
             attributedString: NSMutableAttributedString(string: string)
         )
