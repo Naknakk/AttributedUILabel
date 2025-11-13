@@ -77,12 +77,10 @@ extension TextStyleBuilder {
         let length = attributedString.length
         let range = NSRange(location: 0, length: length)
         
-        if let style {
-            attributedString.addAttribute(.underlineStyle,
-                                          value: style.rawValue,
-                                          range: range)
-        }
-
+        attributedString.addAttribute(.underlineStyle,
+                                      value: style?.rawValue ?? 0,
+                                      range: range)
+        
         return self
     }
 }
