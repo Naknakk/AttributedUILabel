@@ -1,5 +1,5 @@
 //
-//  FigmaTextBuilder.swift
+//  TypographyBuilder.swift
 //  FigmaUILabel
 //
 //  Created by YunhakLee on 4/1/25.
@@ -7,18 +7,18 @@
 
 import UIKit
 
-struct FigmaTextBuilder {
-    var label: FigmaUILabel
+struct TypographyBuilder {
+    var label: UILabel
     var attributedString: NSMutableAttributedString
     
-    init(label: FigmaUILabel, attributedString: NSMutableAttributedString) {
+    init(label: UILabel, attributedString: NSMutableAttributedString) {
         self.label = label
         self.attributedString = attributedString
     }
 }
 
 // MARK: Basic
-extension FigmaTextBuilder {
+extension TypographyBuilder {
     func applyAttribute() {
         label.attributedText = attributedString
     }
@@ -26,7 +26,7 @@ extension FigmaTextBuilder {
 
 
 // MARK: TextStyle
-extension FigmaTextBuilder {
+extension TypographyBuilder {
     private func baseParagraphStyle() -> NSMutableParagraphStyle {
         let style = NSMutableParagraphStyle()
         style.alignment = label.textAlignment
@@ -36,7 +36,7 @@ extension FigmaTextBuilder {
         return style
     }
     
-    func lineHeight(_ value: CGFloat?) -> FigmaTextBuilder {
+    func lineHeight(_ value: CGFloat?) -> TypographyBuilder {
         let length = attributedString.length
         let range = NSRange(location: 0, length: length)
         let style = baseParagraphStyle()
@@ -61,7 +61,7 @@ extension FigmaTextBuilder {
         return self
     }
     
-    func kerning(_ value: CGFloat?) -> FigmaTextBuilder {
+    func kerning(_ value: CGFloat?) -> TypographyBuilder {
         let length = attributedString.length
         let range = NSRange(location: 0, length: length)
         
@@ -77,7 +77,7 @@ extension FigmaTextBuilder {
         return self
     }
     
-    func underlineStyle(_ style: NSUnderlineStyle?) -> FigmaTextBuilder {
+    func underlineStyle(_ style: NSUnderlineStyle?) -> TypographyBuilder {
         let length = attributedString.length
         let range = NSRange(location: 0, length: length)
         
@@ -92,5 +92,4 @@ extension FigmaTextBuilder {
         
         return self
     }
-    
 }

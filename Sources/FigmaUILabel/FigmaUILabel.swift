@@ -35,9 +35,9 @@ public final class FigmaUILabel: UILabel {
 }
 
 extension FigmaUILabel {
-    private func makeAttribute(with text: String?) -> FigmaTextBuilder {
+    private func makeAttribute(with text: String?) -> TypographyBuilder {
         let string = text ?? ""
-        return FigmaTextBuilder(
+        return TypographyBuilder(
             label: self,
             attributedString: NSMutableAttributedString(string: string)
         )
