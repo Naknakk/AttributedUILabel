@@ -27,16 +27,29 @@ public final class FigmaUILabel: UILabel {
         
         DispatchQueue.main.async { [weak self] in
             self?.updateTextStyleIfNeeded()
+            self?.needsTextStyleUpdate = false
         }
     }
     
     private func updateTextStyleIfNeeded() {
-        needsTextStyleUpdate = false
+        debugPrintUnderline(self, tag: "before builder")
         
         TextStyleBuilder(self)
             .lineHeight(lineHeight.resolvedValue(for: font))
             .kerning(kerning.resolvedValue(for: font))
             .underlineStyle(underlineStyle)
             .apply()
+        
+        debugPrintUnderline(self, tag: "after builder")
+    }
+    private func debugPrintUnderline(_ label: UILabel, tag: String) {
+        guard let attr = label.attributedText else {
+            print("[\(tag)] no attributedText")
+            return
+        }
+        let length = attr.length
+        let attrs = attr.attributes(at: 0, effectiveRange: nil)
+        print("[\(tag)] length: \(length), attrs[0]: \(attrs)")
     }
 }
+
