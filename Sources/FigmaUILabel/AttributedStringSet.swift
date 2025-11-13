@@ -20,7 +20,7 @@ struct AttributedStringSet {
 // MARK: Basic
 extension AttributedStringSet {
     func applyAttribute() {
-        self.label.attributedText = self.attributedString
+        label.attributedText = attributedString
     }
 }
 
@@ -29,68 +29,68 @@ extension AttributedStringSet {
 extension AttributedStringSet {
     private func baseParagraphStyle() -> NSMutableParagraphStyle {
         let style = NSMutableParagraphStyle()
-        style.alignment = self.label.textAlignment
-        style.lineBreakMode = self.label.lineBreakMode
-        style.lineBreakStrategy = self.label.lineBreakStrategy
-        style.allowsDefaultTighteningForTruncation = self.label.allowsDefaultTighteningForTruncation
+        style.alignment = label.textAlignment
+        style.lineBreakMode = label.lineBreakMode
+        style.lineBreakStrategy = label.lineBreakStrategy
+        style.allowsDefaultTighteningForTruncation = label.allowsDefaultTighteningForTruncation
         return style
     }
     
     func lineHeight(_ value: CGFloat?) -> AttributedStringSet {
-        let length = self.attributedString.length
-        guard length >= 1 else { return self }
-        
+        let length = attributedString.length
+        let range = NSRange(location: 0, length: length)
         let style = baseParagraphStyle()
         
         if let lineHeight = value {
             style.maximumLineHeight = lineHeight
             style.minimumLineHeight = lineHeight
+            let offset = (lineHeight - label.font.lineHeight) / 2
             
-            self.attributedString.addAttribute(
-                .paragraphStyle,
-                value: style,
-                range: NSRange(location: 0, length: length)
-            )
-            
-            self.attributedString.addAttribute(
-                .baselineOffset,
-                value: (lineHeight - self.label.font.lineHeight) / 2,
-                range: NSRange(location: 0, length: length)
-            )
+            attributedString.addAttribute(.paragraphStyle,
+                                          value: style,
+                                          range: range)
+            attributedString.addAttribute(.baselineOffset,
+                                          value: offset,
+                                          range: range)
         } else {
-            self.attributedString.addAttribute(
-                .paragraphStyle,
-                value: style,
-                range: NSRange(location: 0, length: length)
-            )
+            attributedString.addAttribute(.paragraphStyle,
+                                          value: style,
+                                          range: range)
         }
         
         return self
     }
     
     func kerning(_ value: CGFloat?) -> AttributedStringSet {
-        let length = self.attributedString.length
-        guard length > 1 else { return self }
-        guard let kerning = value else { return self }
+        let length = attributedString.length
+        let range = NSRange(location: 0, length: length)
         
-        self.attributedString.addAttribute(
-            .kern,
-            value: kerning,
-            range: NSRange(location: 0, length: length)
-        )
+        if let kerning = value {
+            attributedString.addAttribute(.kern,
+                                          value: kerning,
+                                          range: range)
+        } else {
+            attributedString.removeAttribute(.kern,
+                                             range: range)
+        }
         
         return self
     }
     
     func underlineStyle(_ style: NSUnderlineStyle?) -> AttributedStringSet {
-        let length = self.attributedString.length
+        let length = attributedString.length
+        let range = NSRange(location: 0, length: length)
         
-        self.attributedString.addAttribute(
-            .underlineStyle,
-            value: style?.rawValue,
-            range: NSRange(location: 0, length: length)
-        )
+        if let style {
+            attributedString.addAttribute(.underlineStyle,
+                                          value: style.rawValue,
+                                          range: range)
+        } else {
+            attributedString.removeAttribute(.underlineStyle,
+                                             range: range)
+        }
         
         return self
     }
+    
 }
