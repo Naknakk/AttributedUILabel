@@ -25,7 +25,7 @@ public final class FigmaUILabel: UILabel {
         guard !isUpdating else { return }
         isUpdating = true
         defer { isUpdating = false }
-        self.makeAttribute(with: self.text)?
+        self.makeAttribute(with: self.text)
             .lineHeight(lineHeight.resolvedValue(for: self.font))
             .kerning(kerning.resolvedValue(for: self.font))
             .underlineStyle(underlineStyle)
@@ -34,14 +34,11 @@ public final class FigmaUILabel: UILabel {
 }
 
 extension FigmaUILabel {
-    private func makeAttribute(with text: String?) -> AttributedStringSet? {
-        guard let text = text, !text.isEmpty else { return nil }
-        
-        let attributedStringSet = AttributedStringSet(
+    private func makeAttribute(with text: String?) -> AttributedStringSet {
+        let string = text ?? ""
+        return AttributedStringSet(
             label: self,
-            attributedString: NSMutableAttributedString(string: text)
+            attributedString: NSMutableAttributedString(string: string)
         )
-        
-        return attributedStringSet
     }
 }
