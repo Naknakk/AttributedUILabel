@@ -22,24 +22,29 @@ public final class FigmaUILabel: UILabel {
     
     //MARK: TextStyle Update
     private var needsTextStyleUpdate = false
-    
+}
+
+// MARK: - Update cycle
+extension FigmaUILabel {
     private func setNeedsTextStyleUpdate() {
-        guard !needsTextStyleUpdate else { return }
         needsTextStyleUpdate = true
-        
-        DispatchQueue.main.async { [weak self] in
-            guard let self else { return }
-            self.updateTextStyleIfNeeded()
-            self.needsTextStyleUpdate = false
-        }
+        setNeedsLayout()          // 👉 다음 레이아웃 사이클에서 한 번에 처리
     }
-    
+
+    public override func layoutSubviews() {
+        super.layoutSubviews()
+        updateTextStyleIfNeeded()
+    }
+
     private func updateTextStyleIfNeeded() {
+        guard needsTextStyleUpdate else { return }
+        
         TextStyleBuilder(self)
             .lineHeight(lineHeight.resolvedValue(for: font))
             .kerning(kerning.resolvedValue(for: font))
             .underlineStyle(underlineStyle)
             .apply()
+        
+        needsTextStyleUpdate = false
     }
 }
-
