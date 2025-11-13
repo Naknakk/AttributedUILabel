@@ -24,7 +24,6 @@ extension TextStyleBuilder {
     }
 }
 
-
 // MARK: TextStyle
 extension TextStyleBuilder {
     private func baseParagraphStyle() -> NSMutableParagraphStyle {
@@ -69,9 +68,6 @@ extension TextStyleBuilder {
             attributedString.addAttribute(.kern,
                                           value: kerning,
                                           range: range)
-        } else {
-            attributedString.removeAttribute(.kern,
-                                             range: range)
         }
         
         return self
@@ -85,11 +81,8 @@ extension TextStyleBuilder {
             attributedString.addAttribute(.underlineStyle,
                                           value: style.rawValue,
                                           range: range)
-        } else {
-            attributedString.removeAttribute(.underlineStyle,
-                                             range: range)
         }
-        
+
         return self
     }
 }
