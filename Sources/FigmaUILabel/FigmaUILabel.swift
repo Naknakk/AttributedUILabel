@@ -35,24 +35,26 @@ public final class FigmaUILabel: UILabel {
     }
     
     private func updateTextStyleIfNeeded() {
+        Logger.debugPrintAllAttributes(of: self, tag: "before")
         TextStyleBuilder(self)
             .lineHeight(lineHeight.resolvedValue(for: font))
             .kerning(kerning.resolvedValue(for: font))
             .underlineStyle(underlineStyle)
             .apply()
+        Logger.debugPrintAllAttributes(of: self, tag: "after")
     }
     
-    func debugUnderlineRuns(_ label: UILabel, tag: String) {
+    private func debugPrintAttributes(_ label: UILabel, tag: String) {
         guard let attr = label.attributedText else {
             print("[\(tag)] no attributedText")
             return
         }
-
+        
         let fullRange = NSRange(location: 0, length: attr.length)
-        attr.enumerateAttribute(.underlineStyle,
-                                in: fullRange,
-                                options: []) { value, range, _ in
-            print("[\(tag)] underline attr in range \(range): \(String(describing: value))")
+        print("[\(tag)] length: \(attr.length)")
+        
+        attr.enumerateAttributes(in: fullRange, options: []) { attributes, range, _ in
+            print("  - range: \(range), attrs: \(attributes)")
         }
     }
 }
