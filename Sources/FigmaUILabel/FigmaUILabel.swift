@@ -35,13 +35,11 @@ public final class FigmaUILabel: UILabel {
     }
     
     private func updateTextStyleIfNeeded() {
-        Logger.debugPrintAllAttributes(of: self, tag: "before")
         TextStyleBuilder(self)
             .lineHeight(lineHeight.resolvedValue(for: font))
             .kerning(kerning.resolvedValue(for: font))
             .underlineStyle(underlineStyle)
             .apply()
-        Logger.debugPrintAllAttributes(of: self, tag: "after")
     }
     
     private func debugPrintAttributes(_ label: UILabel, tag: String) {
