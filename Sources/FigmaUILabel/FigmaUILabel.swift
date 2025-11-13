@@ -8,38 +8,35 @@
 import UIKit
 
 public final class FigmaUILabel: UILabel {
-    public override var text: String? { didSet { updateLabel() } }
-    public override var font: UIFont! { didSet { updateLabel() } }
-    public override var textAlignment: NSTextAlignment { didSet { updateLabel() } }
-    public override var lineBreakMode: NSLineBreakMode { didSet { updateLabel() } }
-    public override var allowsDefaultTighteningForTruncation: Bool { didSet { updateLabel() } }
-    public override var lineBreakStrategy: NSParagraphStyle.LineBreakStrategy { didSet { updateLabel() } }
+    private var needsTextStyleUpdate = false
     
-    public var lineHeight: FigmaMetric = .natural { didSet { updateLabel() } }
-    public var kerning: FigmaMetric = .natural { didSet { updateLabel() } }
-    public var underlineStyle: NSUnderlineStyle? { didSet { updateLabel() } }
+    public override var text: String? { didSet { setNeedsTextStyleUpdate() } }
+    public override var font: UIFont! { didSet { setNeedsTextStyleUpdate() } }
+    public override var textAlignment: NSTextAlignment { didSet { setNeedsTextStyleUpdate() } }
+    public override var lineBreakMode: NSLineBreakMode { didSet { setNeedsTextStyleUpdate() } }
+    public override var allowsDefaultTighteningForTruncation: Bool { didSet { setNeedsTextStyleUpdate() } }
+    public override var lineBreakStrategy: NSParagraphStyle.LineBreakStrategy { didSet { setNeedsTextStyleUpdate() } }
     
-    private var isUpdating = false
+    public var lineHeight: FigmaMetric = .natural { didSet { setNeedsTextStyleUpdate() } }
+    public var kerning: FigmaMetric = .natural { didSet { setNeedsTextStyleUpdate() } }
+    public var underlineStyle: NSUnderlineStyle? { didSet { setNeedsTextStyleUpdate() } }
     
-    private func updateLabel() {
-        guard !isUpdating else { return }
-        isUpdating = true
-        defer { isUpdating = false }
+    private func setNeedsTextStyleUpdate() {
+        guard !needsTextStyleUpdate else { return }
+        needsTextStyleUpdate = true
         
-        self.makeAttribute(with: self.text)
-            .lineHeight(lineHeight.resolvedValue(for: self.font))
-            .kerning(kerning.resolvedValue(for: self.font))
-            .underlineStyle(underlineStyle)
-            .applyAttribute()
+        DispatchQueue.main.async { [weak self] in
+            self?.updateTextStyleIfNeeded()
+        }
     }
-}
-
-extension FigmaUILabel {
-    private func makeAttribute(with text: String?) -> TypographyBuilder {
-        let string = text ?? ""
-        return TypographyBuilder(
-            label: self,
-            attributedString: NSMutableAttributedString(string: string)
-        )
+    
+    private func updateTextStyleIfNeeded() {
+        needsTextStyleUpdate = false
+        
+        TextStyleBuilder(self)
+            .lineHeight(lineHeight.resolvedValue(for: font))
+            .kerning(kerning.resolvedValue(for: font))
+            .underlineStyle(underlineStyle)
+            .apply()
     }
 }

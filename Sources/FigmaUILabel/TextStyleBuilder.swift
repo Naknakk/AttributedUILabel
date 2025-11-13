@@ -7,26 +7,26 @@
 
 import UIKit
 
-struct TypographyBuilder {
+struct TextStyleBuilder {
     var label: UILabel
     var attributedString: NSMutableAttributedString
     
-    init(label: UILabel, attributedString: NSMutableAttributedString) {
+    init(_ label: UILabel) {
         self.label = label
-        self.attributedString = attributedString
+        self.attributedString = NSMutableAttributedString(string: label.text ?? "")
     }
 }
 
 // MARK: Basic
-extension TypographyBuilder {
-    func applyAttribute() {
+extension TextStyleBuilder {
+    func apply() {
         label.attributedText = attributedString
     }
 }
 
 
 // MARK: TextStyle
-extension TypographyBuilder {
+extension TextStyleBuilder {
     private func baseParagraphStyle() -> NSMutableParagraphStyle {
         let style = NSMutableParagraphStyle()
         style.alignment = label.textAlignment
@@ -36,7 +36,7 @@ extension TypographyBuilder {
         return style
     }
     
-    func lineHeight(_ value: CGFloat?) -> TypographyBuilder {
+    func lineHeight(_ value: CGFloat?) -> TextStyleBuilder {
         let length = attributedString.length
         let range = NSRange(location: 0, length: length)
         let style = baseParagraphStyle()
@@ -61,7 +61,7 @@ extension TypographyBuilder {
         return self
     }
     
-    func kerning(_ value: CGFloat?) -> TypographyBuilder {
+    func kerning(_ value: CGFloat?) -> TextStyleBuilder {
         let length = attributedString.length
         let range = NSRange(location: 0, length: length)
         
@@ -77,7 +77,7 @@ extension TypographyBuilder {
         return self
     }
     
-    func underlineStyle(_ style: NSUnderlineStyle?) -> TypographyBuilder {
+    func underlineStyle(_ style: NSUnderlineStyle?) -> TextStyleBuilder {
         let length = attributedString.length
         let range = NSRange(location: 0, length: length)
         
