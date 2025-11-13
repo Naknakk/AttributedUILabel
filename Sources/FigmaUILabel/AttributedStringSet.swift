@@ -83,13 +83,11 @@ extension AttributedStringSet {
     }
     
     func underlineStyle(_ style: NSUnderlineStyle?) -> AttributedStringSet {
-        guard let style else { return self }
-        
         let length = self.attributedString.length
         
         self.attributedString.addAttribute(
             .underlineStyle,
-            value: style.rawValue,
+            value: style?.rawValue,
             range: NSRange(location: 0, length: length)
         )
         
