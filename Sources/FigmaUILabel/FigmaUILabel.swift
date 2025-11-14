@@ -19,18 +19,10 @@ public final class FigmaUILabel: UILabel {
     public var lineHeight: FigmaMetric = .natural { didSet { updateTextStyle() } }
     public var kerning: FigmaMetric = .natural { didSet { updateTextStyle() } }
     public var underlineStyle: NSUnderlineStyle? { didSet { updateTextStyle() } }
-    
-    //MARK: TextStyle Update
-    private var needsTextStyleUpdate = false
 }
 
 // MARK: - Update cycle
 extension FigmaUILabel {
-    private func setNeedsTextStyleUpdate() {
-        needsTextStyleUpdate = true
-        setNeedsLayout()          // 👉 다음 레이아웃 사이클에서 한 번에 처리
-    }
-
     private func updateTextStyle() {
         TextStyleBuilder(self)
             .lineHeight(lineHeight.resolvedValue(for: font))
