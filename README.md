@@ -104,7 +104,6 @@ label.textAlignment = .left
 
 label.text = "테스트입니다."
 label.font = .systemFont(ofSize: 16)
-label.textColor = .label
 
 label.lineHeight = .point(24)     // Figma line-height(px)
 label.kerning = .percent(-2)      // Figma letter spacing(%)
