@@ -1,6 +1,6 @@
 # FigmaUILabel
 
-**FigmaUILabel은 Figma에서 정의한 타이포그래피 속성을 UIKit의 기본 UILabel 프로퍼티처럼 직관적으로 수정할 수 있도록 설계된 라이브러리**입니다.
+**FigmaUILabel은 Figma에서 정의한 타이포그래피 속성을 UIKit의 기본 UILabel 프로퍼티처럼 직관적으로 수정할 수 있도록 설계한 라이브러리**입니다.
 lineHeight, kerning, underlineStyle 등을 일반 프로퍼티처럼 설정하면, 내부적으로 필요한 텍스트 스타일을 자동으로 다시 구성합니다.
 
 UIKit의 기본 UILabel은 Figma와 다르게 작동하는 부분이 많아 디자인 시안과 실제 구현 사이에 미묘한 차이가 발생하기 쉽습니다. FigmaUILabel은 이러한 불일치를 해결하여 디자인과 완전히 동일한 타이포그래피를 손쉽게 구현하는 것을 목표로 합니다.
